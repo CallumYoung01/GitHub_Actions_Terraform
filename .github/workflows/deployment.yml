@@ -18,11 +18,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Trivy Scan
-        uses: Org/repo_name@main
+      - name: Run Trivy vulnerability scanner in IaC mode
+        uses: aquasecurity/trivy-action@0.20.0
         with:
-          template: tfsec/trivy-new-pipeline.yml
-          WorkingDirectory: ${{ github.workspace }}/terraform
+          scan-type: 'config'
+          hide-progress: true
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+
+
+      #- name: Trivy Scan
+      #  uses: Org/repo_name@main
+      #  with:
+      #    template: tfsec/trivy-new-pipeline.yml
+      #    WorkingDirectory: ${{ github.workspace }}/terraform
 
   dev_deploy:
     name: Dev Deploy
