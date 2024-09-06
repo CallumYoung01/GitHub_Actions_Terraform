@@ -52,7 +52,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Terraform Deploy
-        uses: Org/repo_name@main
+        uses: ./.github/actions/terraform-apply
         with:
           template: pipelines/terraform-jobs.yml
           environment: dev
@@ -70,7 +70,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Terraform Deploy
-        uses: Org/repo_name@main
+        uses: ./.github/actions/terraform-apply
         with:
           template: pipelines/terraform-jobs.yml
           environment: qa
@@ -87,7 +87,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Terraform Deploy
-        uses: Org/repo_name@main
+        uses: ./.github/actions/terraform-apply
         with:
           template: pipelines/terraform-jobs.yml
           environment: stg
@@ -104,7 +104,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Terraform Deploy
-        uses: Org/repo_name@main
+        uses: ./.github/actions/terraform-apply
         with:
           template: pipelines/terraform-jobs.yml
           environment: live
