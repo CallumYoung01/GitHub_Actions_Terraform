@@ -44,16 +44,12 @@ jobs:
 
   dev_deploy:
       name: Dev Deploy
-      runs-on: ubuntu-latest
       needs: trivy_scan
-      if: always()
       uses: ./.github/workflows/terraform-deployment.yml
-      env: 
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       with:
         #template: pipelines/terraform-jobs.yml
         environment: dev
-        ARM_TENANT_ID: $ARM_TENANT_ID
+        
 
 
 #  dev_deploy:
