@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs: 
       environment:
-        description: The Azure Environment to deploy to
+        description: The Azure Environment for deployment 
         required: true
         type: string 
 
