@@ -22,7 +22,6 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.TERRAFORM_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
       ARM_ACCESS_KEY: ${{ secrets.TERRAFORM_ACCESS_KEY }}
-      test: 'test'
     defaults:
       run:
         working-directory: ./terraform
