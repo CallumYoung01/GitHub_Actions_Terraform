@@ -36,7 +36,7 @@ jobs:
     - name: Terraform Validate
       if: github.ref == 'refs/heads/main'
       run: |
-        terraform init -backend-config="./terraform/backend/${{ inputs.environment }}-backend.hcl"
+        terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
         terraform validate
       env:
         TF_VAR_serviceprinciple_key: ${{ secrets.TERRAFORM_CLIENT_SECRET }}
