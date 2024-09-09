@@ -10,6 +10,14 @@ on:
     branches:
       - main
 
+env:
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.TERRAFORM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
+      ARM_ACCESS_KEY: ${{ secrets.TERRAFORM_ACCESS_KEY }}      
+
+
 jobs:
   trivy_scan:
     name: Trivy Scan
@@ -49,6 +57,7 @@ jobs:
       with:
         #template: pipelines/terraform-jobs.yml
         environment: dev
+        ARM_TENANT_ID: $ARM_TENANT_ID
         
 
 
