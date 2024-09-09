@@ -14,8 +14,8 @@ jobs:
   terraform:
     name: Deploy
     runs-on: ubuntu-latest
-    container:
-      image: hashicorp/terraform:latest
+    #container:
+    #  image: hashicorp/terraform:latest
     env:
       ARM_TENANT_ID: ${{ secrets.TERRAFORM_TENANT_ID }}
       ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
@@ -29,6 +29,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
 
     - name: Terraform Validate
       if: github.ref == 'refs/heads/main'
