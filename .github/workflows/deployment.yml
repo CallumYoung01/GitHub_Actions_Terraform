@@ -60,53 +60,53 @@ jobs:
           #config_variablegroup: ${{ secrets.CONFIG_VARIABLEGROUP }}
           #runApply: ${{ github.event.inputs.devOnly || github.ref == 'refs/heads/main' }}
 
-  qa_deploy:
-    name: QA Deploy
-    runs-on: ubuntu-latest
-    needs: dev_deploy
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Terraform Deploy
-        uses: ./.github/actions/terraform-apply
-        with:
-          template: pipelines/terraform-jobs.yml
-          environment: qa
-          KV_variablegroup: ${{ secrets.KV_VARIABLEGROUP }}
-          config_variablegroup: ${{ secrets.CONFIG_VARIABLEGROUP }}
-
-  stg_deploy:
-    name: Staging Deploy
-    runs-on: ubuntu-latest
-    needs: qa_deploy
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Terraform Deploy
-        uses: ./.github/actions/terraform-apply
-        with:
-          template: pipelines/terraform-jobs.yml
-          environment: stg
-          KV_variablegroup: ${{ secrets.KV_VARIABLEGROUP }}
-          config_variablegroup: ${{ secrets.CONFIG_VARIABLEGROUP }}
-
-  live_deploy:
-    name: Live Deploy
-    runs-on: ubuntu-latest
-    needs: stg_deploy
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Terraform Deploy
-        uses: ./.github/actions/terraform-apply
-        with:
-          template: pipelines/terraform-jobs.yml
-          environment: live
-          KV_variablegroup: ${{ secrets.KV_VARIABLEGROUP }}
-          config_variablegroup: ${{ secrets.CONFIG_VARIABLEGROUP }}
+#  qa_deploy:
+#    name: QA Deploy
+#    runs-on: ubuntu-latest
+#    needs: dev_deploy
+#    if: github.ref == 'refs/heads/main'
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2
+#
+#      - name: Terraform Deploy
+#        uses: ./.github/actions/terraform-apply
+#        with:
+#          template: pipelines/terraform-jobs.yml
+#          environment: qa
+#          KV_variablegroup: ${{ secrets.KV_VARIABLEGROUP }}
+#          config_variablegroup: ${{ secrets.CONFIG_VARIABLEGROUP }}
+#
+#  stg_deploy:
+#    name: Staging Deploy
+#    runs-on: ubuntu-latest
+#    needs: qa_deploy
+#    if: github.ref == 'refs/heads/main'
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2
+#
+#      - name: Terraform Deploy
+#        uses: ./.github/actions/terraform-apply
+#        with:
+#          template: pipelines/terraform-jobs.yml
+#          environment: stg
+#          KV_variablegroup: ${{ secrets.KV_VARIABLEGROUP }}
+#          config_variablegroup: ${{ secrets.CONFIG_VARIABLEGROUP }}
+#
+#  live_deploy:
+#    name: Live Deploy
+#    runs-on: ubuntu-latest
+#    needs: stg_deploy
+#    if: github.ref == 'refs/heads/main'
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2
+#
+#      - name: Terraform Deploy
+#        uses: ./.github/actions/terraform-apply
+#        with:
+#          template: pipelines/terraform-jobs.yml
+#          environment: live
+#          KV_variablegroup: ${{ secrets.KV_VARIABLEGROUP }}
+#          config_variablegroup: ${{ secrets.CONFIG_VARIABLEGROUP }}
