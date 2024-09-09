@@ -1,9 +1,14 @@
 name: Terraform Deployment
 
-on:
-  push:
-    branches:
-      - main
+on: 
+  workflow_call:
+    inputs: 
+      environment:
+        description: The Azure Environment to deploy to
+        required: true
+        type: string 
+
+
 
 jobs:
   terraform:

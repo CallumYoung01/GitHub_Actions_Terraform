@@ -52,13 +52,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Terraform Deploy
-        uses: ./.github/actions/terraform-apply
+        uses: ./.github/workflows/terraform-deployment
         with:
-          template: pipelines/terraform-jobs.yml
+          #template: pipelines/terraform-jobs.yml
           environment: dev
-          KV_variablegroup: ${{ secrets.KV_VARIABLEGROUP }}
-          config_variablegroup: ${{ secrets.CONFIG_VARIABLEGROUP }}
-          runApply: ${{ github.event.inputs.devOnly || github.ref == 'refs/heads/main' }}
+          #KV_variablegroup: ${{ secrets.KV_VARIABLEGROUP }}
+          #config_variablegroup: ${{ secrets.CONFIG_VARIABLEGROUP }}
+          #runApply: ${{ github.event.inputs.devOnly || github.ref == 'refs/heads/main' }}
 
   qa_deploy:
     name: QA Deploy
