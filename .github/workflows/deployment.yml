@@ -52,7 +52,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Terraform Deploy
-        uses: ./.github/workflows/terraform-deployment
+        uses: ./.github/workflows/terraform-deployment.yml
         with:
           #template: pipelines/terraform-jobs.yml
           environment: dev
