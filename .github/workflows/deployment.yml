@@ -46,6 +46,15 @@ jobs:
           serviceprinciple_key: ${{ secrets.TERRAFORM_CLIENT_SECRET }}
           subscription_id: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
 
+
+  QA_deploy:
+    name: "QA Terraform Deploy"
+    runs-on: ubuntu-latest
+    #environment: development 
+    env: 
+      ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
+      name: Dev Deploy
+    steps:
       - name: QA Terraform
         id: qa-tf-deploy
         uses: ./.github/actions/terraform-deploy
