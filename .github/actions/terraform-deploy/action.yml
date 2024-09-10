@@ -18,7 +18,7 @@ runs:
   steps:
     - name: Get dir info
       shell: bash
-      run: ls
+      run: dir
 
     - name: Setup Terraform
       id: TF-Setup
