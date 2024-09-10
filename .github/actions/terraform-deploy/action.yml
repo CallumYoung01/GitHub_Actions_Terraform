@@ -34,6 +34,7 @@ runs:
       working-directory: ./terraform
 
     - name: Terraform Plan
+      id: plan
       shell: bash
       run: |
         terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
@@ -44,6 +45,7 @@ runs:
       working-directory: ./terraform
 
     - name: Terraform Apply
+      id: apply
       shell: bash
       if: ${{ github.event.inputs.runApply == 'true' }}
       run: |
