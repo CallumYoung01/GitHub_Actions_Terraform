@@ -7,6 +7,11 @@ on:
         description: The Azure Environment for deployment 
         required: true
         type: string 
+      ARM_TENANT_ID: 
+        description: test 
+        required: true
+        type: string 
+
 
 
 

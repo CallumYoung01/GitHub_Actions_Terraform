@@ -11,7 +11,7 @@ on:
       - main
 
 env:
-      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ARM_TENANT_ID: test
       ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.TERRAFORM_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
@@ -19,45 +19,39 @@ env:
 
 
 jobs:
-  trivy_scan:
-    name: Trivy Scan
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Run Trivy vulnerability scanner in IaC mode
-        uses: aquasecurity/trivy-action@0.20.0
-        with:
-          scan-type: 'config'
-          #hide-progress: true
-          #format: 'sarif'
-          #output: 'trivy-results.sarif'
-          #exit-code: '1'
-          #ignore-unfixed: true
-          #severity: 'CRITICAL,HIGH'
-
-     # - name: Upload Trivy scan results to GitHub Security tab
-     #   uses: github/codeql-action/upload-sarif@v2
-     #   with:
-     #     sarif_file: 'trivy-results.sarif'
-
-
-
-      #- name: Trivy Scan
-      #  uses: Org/repo_name@main
-      #  with:
-      #    template: tfsec/trivy-new-pipeline.yml
-      #    WorkingDirectory: ${{ github.workspace }}/terraform
 
   dev_deploy:
+    runs-on: ubuntu-latest
+    #environment: dev
+    env: 
+      ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
       name: Dev Deploy
-      needs: trivy_scan
-      uses: ./.github/workflows/terraform-deployment.yml
-      with:
-        #template: pipelines/terraform-jobs.yml
-        environment: dev
-        ARM_TENANT_ID: $ARM_TENANT_ID
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      
+      - name: run tf deploy
+        id: tf-deploy
+        uses: ./.github/actions/terraform-deploy
+        env:
+          ARM_TENANT_ID: test
+        with:
+          environment: dev
+          ARM_TENANT_ID: $ARM_TENANT_ID
+  
+
+
+
+#  dev_deploy:
+#    environment: dev
+#    env: 
+#      ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
+#      name: Dev Deploy
+#      uses: ./.github/workflows/terraform-deployment.yml
+#      with:
+#        #template: pipelines/terraform-jobs.yml
+#        environment: dev
+#        ARM_TENANT_ID: {{ env.ARM_TENANT_ID }}
         
 
 
