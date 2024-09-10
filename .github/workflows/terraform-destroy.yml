@@ -1,54 +1,15 @@
-name: Terraform Deployment
+name: Terraform Destroy
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - 'on-demand-pipelines/**'
-  pull_request:
-    branches:
-      - main
-
-env:
-      ARM_TENANT_ID: test
-      ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.TERRAFORM_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
-      ARM_ACCESS_KEY: ${{ secrets.TERRAFORM_ACCESS_KEY }}      
-
+  schedule:
+    - cron: '0 18 * * 1-5'
 
 jobs:
-
-  trivy_scan: 
-    runs-on: ubuntu-latest
-    name: "Trivy IaC Security Scan"
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Run Trivy vulnerability scanner in IaC mode
-        uses: aquasecurity/trivy-action@0.20.0
-        with:
-          scan-type: 'config'
-          hide-progress: true
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-          exit-code: '1'
-          ignore-unfixed: true
-          severity: 'CRITICAL,HIGH'
-
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: 'trivy-results.sarif'
-
 
   dev_deploy:
     runs-on: ubuntu-latest
     name: "Dev Terraform Deploy"
-    needs: trivy_scan
     #environment: development 
     env: 
       ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
@@ -59,7 +20,7 @@ jobs:
 
       - name: Dev Terraform
         id: dev-tf-deploy
-        uses: ./.github/actions/terraform-deploy
+        uses: ./.github/actions/terraform-destroy
         env:
           ARM_TENANT_ID: ${{ secrets.TERRAFORM_TENANT_ID }}
           ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
@@ -87,7 +48,7 @@ jobs:
 
       - name: QA Terraform
         id: qa-tf-deploy
-        uses: ./.github/actions/terraform-deploy
+        uses: ./.github/actions/terraform-destroy
         env:
           ARM_TENANT_ID: ${{ secrets.TERRAFORM_TENANT_ID }}
           ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}

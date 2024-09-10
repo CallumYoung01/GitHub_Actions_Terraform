@@ -1,0 +1,33 @@
+name: 'Terraform Destroy'
+description: 'Deploys the Terraform'
+inputs:
+  environment:
+    description: 'Deployment environment'
+    required: true
+  serviceprinciple_key:
+    description: 'Deployment environment'
+    required: true
+  subscription_id:
+    description: 'ID for deployment subscription'
+    required: true
+    
+
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Terraform
+      id: TF-Setup
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Destroy
+      id: Destroy
+      shell: bash
+      #if: ${{ github.event.inputs.runApply == 'true' }}
+      run: |
+        terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
+        terraform Destroy -var-file="./config/common.tfvars" -var-file="./config/${{ inputs.environment }}.tfvars" -auto-approve -input=false
+      env:
+        TF_VAR_environment: ${{ inputs.environment }}
+        TF_VAR_subscription_id: ${{ inputs.subscription_id }}
+      working-directory: ./terraform
