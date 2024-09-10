@@ -16,6 +16,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Get code
+      uses: actions/checkout@v3
+
     - name: Setup Terraform
       id: TF-Setup
       uses: hashicorp/setup-terraform@v3
