@@ -23,6 +23,7 @@ jobs:
 
   dev_deploy:
     runs-on: ubuntu-latest
+    name: "Dev Terraform Deploy"
     #environment: development 
     env: 
       ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
@@ -50,6 +51,7 @@ jobs:
   QA_deploy:
     name: "QA Terraform Deploy"
     runs-on: ubuntu-latest
+    needs: dev_deploy
     #environment: development 
     env: 
       ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
