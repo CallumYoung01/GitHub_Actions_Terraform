@@ -34,6 +34,16 @@ jobs:
         run: |
           echo "ARM_TENANT_ID: $ARM_TENANT_ID"
 
+      - name: Get dir info
+        shell: bash
+        run: ls
+    
+      - name: cd into tf dir
+        shell: bash
+        run: |
+          cd terraform
+          pwd          
+
       - name: run tf deploy
         id: tf-deploy
         uses: ./.github/actions/terraform-deploy
