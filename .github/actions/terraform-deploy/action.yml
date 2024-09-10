@@ -23,6 +23,14 @@ runs:
       shell: bash
       run: ls
 
+    - name: cd into tf dir
+      shell: bash
+      run: cd terrafrom
+
+    - name: Get dir info again 
+      shell: bash
+      run: ls
+
     - name: Setup Terraform
       id: TF-Setup
       uses: hashicorp/setup-terraform@v3
