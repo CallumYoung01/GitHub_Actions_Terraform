@@ -28,9 +28,9 @@ runs:
         terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
         terraform validate
       env:
-        TF_VAR_serviceprinciple_key: ${{ secrets.TERRAFORM_CLIENT_SECRET }}
+        TF_VAR_serviceprinciple_key: ${{ inputs.serviceprinciple_key }}
         TF_VAR_environment: ${{ inputs.environment }}
-        TF_VAR_subscription_id: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
+        TF_VAR_subscription_id: ${{ inputs.subscription_id }}
 
     - name: Terraform Plan
       shell: bash
@@ -39,7 +39,7 @@ runs:
         terraform plan -var-file="config/common.tfvars" -var-file="config/${{ inputs.environment }}.tfvars"
       env:
         TF_VAR_environment: ${{ inputs.environment }}
-        TF_VAR_subscription_id: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
+        TF_VAR_subscription_id: ${{ inputs.subscription_id }}
 
     - name: Terraform Apply
       shell: bash
@@ -49,4 +49,4 @@ runs:
         terraform apply -var-file="config/common.tfvars" -var-file="config/${{ inputs.environment }}.tfvars" -auto-approve -input=false
       env:
         TF_VAR_environment: ${{ inputs.environment }}
-        TF_VAR_subscription_id: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
+        TF_VAR_subscription_id: ${{ inputs.subscription_id }}
