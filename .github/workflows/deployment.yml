@@ -57,6 +57,9 @@ jobs:
       ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
       name: Dev Deploy
     steps:
+      - name: Get code
+        uses: actions/checkout@v3
+
       - name: QA Terraform
         id: qa-tf-deploy
         uses: ./.github/actions/terraform-deploy
