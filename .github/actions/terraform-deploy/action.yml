@@ -1,28 +1,47 @@
-name: 'Terrafrom Deploy'
-description: 'Get the dependencies (via npm) and cache them.'
+name: 'Terraform Deploy'
+description: 'Deploys the Terraform'
 inputs:
   ARM_TENANT_ID:
-    description: 'Whether to cache dependencies or not.'
+    description: 'Azure Tenant ID'
     required: false
-    default: 'true'
-outputs:
-  used-cache:
-    description: 'Whether the cache was used.'
-    value: ${{ steps.install.outputs.cache }}
+  environment:
+    description: 'Deployment environment'
+    required: true
+
 runs:
   using: 'composite'
   steps:
-    - name: Cache dependencies
-      if: inputs.caching == 'true'
-      id: cache
-      uses: actions/cache@v3
-      with:
-        path: node_modules
-        key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-    - name: Install dependencies
-      id: install
-      if: steps.cache.outputs.cache-hit != 'true' || inputs.caching != 'true'
-      run: |
-        npm ci
-        echo "cache='${{ inputs.caching }}'" >> $GITHUB_OUTPUT
+    - name: Setup Terraform
+      id: TF-Setup
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Validate
+      id: validate
+      if: github.ref == 'refs/heads/main'
       shell: bash
+      run: |
+        terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
+        terraform validate
+      env:
+        TF_VAR_serviceprinciple_key: ${{ secrets.TERRAFORM_CLIENT_SECRET }}
+        TF_VAR_environment: ${{ inputs.environment }}
+        TF_VAR_subscription_id: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
+
+    - name: Terraform Plan
+      shell: bash
+      run: |
+        terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
+        terraform plan -var-file="config/common.tfvars" -var-file="config/${{ inputs.environment }}.tfvars"
+      env:
+        TF_VAR_environment: ${{ inputs.environment }}
+        TF_VAR_subscription_id: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
+
+    - name: Terraform Apply
+      shell: bash
+      if: ${{ github.event.inputs.runApply == 'true' }}
+      run: |
+        terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
+        terraform apply -var-file="config/common.tfvars" -var-file="config/${{ inputs.environment }}.tfvars" -auto-approve -input=false
+      env:
+        TF_VAR_environment: ${{ inputs.environment }}
+        TF_VAR_subscription_id: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
