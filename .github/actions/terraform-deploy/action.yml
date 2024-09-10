@@ -36,17 +36,17 @@ runs:
       shell: bash
       run: |
         terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
-        terraform plan -var-file="config/common.tfvars" -var-file="config/${{ inputs.environment }}.tfvars"
+        terraform plan -var-file="./config/common.tfvars" -var-file="./config/${{ inputs.environment }}.tfvars"
       env:
         TF_VAR_environment: ${{ inputs.environment }}
         TF_VAR_subscription_id: ${{ inputs.subscription_id }}
 
-    - name: Terraform Apply
-      shell: bash
-      if: ${{ github.event.inputs.runApply == 'true' }}
-      run: |
-        terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
-        terraform apply -var-file="config/common.tfvars" -var-file="config/${{ inputs.environment }}.tfvars" -auto-approve -input=false
-      env:
-        TF_VAR_environment: ${{ inputs.environment }}
-        TF_VAR_subscription_id: ${{ inputs.subscription_id }}
+    #- name: Terraform Apply
+    #  shell: bash
+    #  if: ${{ github.event.inputs.runApply == 'true' }}
+    #  run: |
+    #    terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
+    #    terraform apply -var-file="config/common.tfvars" -var-file="config/${{ inputs.environment }}.tfvars" -auto-approve -input=false
+    #  env:
+    #    TF_VAR_environment: ${{ inputs.environment }}
+    #    TF_VAR_subscription_id: ${{ inputs.subscription_id }}
