@@ -25,7 +25,9 @@ runs:
 
     - name: cd into tf dir
       shell: bash
-      run: cd terraform
+      run: |
+        cd terraform
+        pwd
 
     - name: Get dir info again 
       shell: bash
