@@ -34,7 +34,7 @@ runs:
       working-directory: ./terraform
 
     - name: Terraform Format
-      id: validate
+      id: Format
       if: github.ref == 'refs/heads/main'
       shell: bash
       run: |
