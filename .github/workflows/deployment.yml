@@ -44,6 +44,11 @@ jobs:
           cd terraform
           pwd          
 
+      - name: Get dir info again 
+        shell: bash
+        run: ls
+    
+
       - name: run tf deploy
         id: tf-deploy
         uses: ./.github/actions/terraform-deploy
