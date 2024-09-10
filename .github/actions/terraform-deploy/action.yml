@@ -16,22 +16,6 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Get code
-      uses: actions/checkout@v3
-
-    - name: Get dir info
-      shell: bash
-      run: ls
-
-    - name: cd into tf dir
-      shell: bash
-      run: |
-        pwd
-
-    - name: Get dir info again 
-      shell: bash
-      run: ls
-
     - name: Setup Terraform
       id: TF-Setup
       uses: hashicorp/setup-terraform@v3
@@ -41,7 +25,6 @@ runs:
       if: github.ref == 'refs/heads/main'
       shell: bash
       run: |
-        ls
         terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
         terraform validate
       env:
@@ -53,7 +36,6 @@ runs:
     - name: Terraform Plan
       shell: bash
       run: |
-        ls
         terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
         terraform plan -var-file="./config/common.tfvars" -var-file="./config/${{ inputs.environment }}.tfvars"
       env:
@@ -61,12 +43,13 @@ runs:
         TF_VAR_subscription_id: ${{ inputs.subscription_id }}
       working-directory: ./terraform
 
-    #- name: Terraform Apply
-    #  shell: bash
-    #  if: ${{ github.event.inputs.runApply == 'true' }}
-    #  run: |
-    #    terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
-    #    terraform apply -var-file="config/common.tfvars" -var-file="config/${{ inputs.environment }}.tfvars" -auto-approve -input=false
-    #  env:
-    #    TF_VAR_environment: ${{ inputs.environment }}
-    #    TF_VAR_subscription_id: ${{ inputs.subscription_id }}
+    - name: Terraform Apply
+      shell: bash
+      if: ${{ github.event.inputs.runApply == 'true' }}
+      run: |
+        terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
+        terraform apply -var-file="./config/common.tfvars" -var-file="./config/${{ inputs.environment }}.tfvars" -auto-approve -input=false
+      env:
+        TF_VAR_environment: ${{ inputs.environment }}
+        TF_VAR_subscription_id: ${{ inputs.subscription_id }}
+      working-directory: ./terraform
