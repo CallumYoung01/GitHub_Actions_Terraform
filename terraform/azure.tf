@@ -10,16 +10,15 @@ terraform {
     }
   }
 
-  # Pre-existing setup
   backend "azurerm" {}
 }
 
 provider "azurerm" {
   features {
-     resource_group {
+    resource_group {
       prevent_deletion_if_contains_resources = false
     }
   }
-  alias           = "sub" # Alias should be named as the service you're creating (DO NOT USE SPOKE)
+  alias           = "sub"
   subscription_id = var.subscription_id
 }
