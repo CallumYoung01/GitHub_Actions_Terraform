@@ -22,7 +22,7 @@ jobs:
 
   dev_deploy:
     runs-on: ubuntu-latest
-    #environment: dev
+    #environment: development 
     env: 
       ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
       name: Dev Deploy
@@ -38,10 +38,15 @@ jobs:
         id: tf-deploy
         uses: ./.github/actions/terraform-deploy
         env:
-          ARM_TENANT_ID: test
+          ARM_TENANT_ID: ${{ secrets.TERRAFORM_TENANT_ID }}
+          ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.TERRAFORM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
+          ARM_ACCESS_KEY: ${{ secrets.TERRAFORM_ACCESS_KEY }}
         with:
           environment: dev
-          ARM_TENANT_ID: $ARM_TENANT_ID
+          serviceprinciple_key: ${{ secrets.TERRAFORM_CLIENT_SECRET }}
+          subscription_id: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
   
 
 

@@ -1,12 +1,17 @@
 name: 'Terraform Deploy'
 description: 'Deploys the Terraform'
 inputs:
-  ARM_TENANT_ID:
-    description: 'Azure Tenant ID'
-    required: false
   environment:
     description: 'Deployment environment'
     required: true
+  serviceprinciple_key:
+    description: 'Deployment environment'
+    required: true
+  subscription_id:
+    description: 'ID for deployment subscription'
+    required: true
+    
+
 
 runs:
   using: 'composite'
