@@ -31,8 +31,8 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
 
-      - name: run tf deploy
-        id: tf-deploy
+      - name: Dev Terraform
+        id: dev-tf-deploy
         uses: ./.github/actions/terraform-deploy
         env:
           ARM_TENANT_ID: ${{ secrets.TERRAFORM_TENANT_ID }}
@@ -45,6 +45,21 @@ jobs:
           environment: dev
           serviceprinciple_key: ${{ secrets.TERRAFORM_CLIENT_SECRET }}
           subscription_id: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
+
+      - name: QA Terraform
+        id: qa-tf-deploy
+        uses: ./.github/actions/terraform-deploy
+        env:
+          ARM_TENANT_ID: ${{ secrets.TERRAFORM_TENANT_ID }}
+          ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.TERRAFORM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
+          ARM_ACCESS_KEY: ${{ secrets.TERRAFORM_ACCESS_KEY }}
+          WORKING_DIRECTORY: ./terraform
+        with:
+          environment: qa
+          serviceprinciple_key: ${{ secrets.TERRAFORM_CLIENT_SECRET }}
+          subscription_id: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}          
   
 
 
