@@ -48,6 +48,7 @@ runs:
         TF_VAR_serviceprinciple_key: ${{ inputs.serviceprinciple_key }}
         TF_VAR_environment: ${{ inputs.environment }}
         TF_VAR_subscription_id: ${{ inputs.subscription_id }}
+      working-directory: ./terraform
 
     - name: Terraform Plan
       shell: bash
@@ -58,6 +59,7 @@ runs:
       env:
         TF_VAR_environment: ${{ inputs.environment }}
         TF_VAR_subscription_id: ${{ inputs.subscription_id }}
+      working-directory: ./terraform
 
     #- name: Terraform Apply
     #  shell: bash
