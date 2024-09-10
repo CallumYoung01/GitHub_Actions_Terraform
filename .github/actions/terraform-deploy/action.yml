@@ -47,7 +47,7 @@ runs:
     - name: Terraform Apply
       id: apply
       shell: bash
-      if: ${{ github.event.inputs.runApply == 'true' }}
+      #if: ${{ github.event.inputs.runApply == 'true' }}
       run: |
         terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
         terraform apply -var-file="./config/common.tfvars" -var-file="./config/${{ inputs.environment }}.tfvars" -auto-approve -input=false
