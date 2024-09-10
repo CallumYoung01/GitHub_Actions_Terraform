@@ -16,9 +16,12 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Get code
+      uses: actions/checkout@v3
+
     - name: Get dir info
       shell: bash
-      run: dir
+      run: ls
 
     - name: Setup Terraform
       id: TF-Setup
