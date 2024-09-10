@@ -29,7 +29,11 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
-      
+
+      - name: Output information
+        run: |
+          echo "ARM_TENANT_ID: $ARM_TENANT_ID"
+
       - name: run tf deploy
         id: tf-deploy
         uses: ./.github/actions/terraform-deploy
