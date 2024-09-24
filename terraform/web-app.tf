@@ -77,12 +77,17 @@ resource "azurerm_private_dns_a_record" "example" {
   zone_name           = azurerm_private_dns_zone.example.name
   resource_group_name = azurerm_resource_group.example.name
   ttl                 = 300
-  records             = [azurerm_private_endpoint.example.private_ip_address]
+  records             = [azurerm_private_endpoint_connection.example.private_ip_address]
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "example" {
-  name                  = "PE-Test-dnslink"
+  name                  = "example-dnslink"
   resource_group_name   = azurerm_resource_group.example.name
   private_dns_zone_name = azurerm_private_dns_zone.example.name
   virtual_network_id    = azurerm_virtual_network.example.id
+}
+
+resource "azurerm_private_endpoint_connection" "example" {
+  private_endpoint_id = azurerm_private_endpoint.example.id
+  name                = "example-connection"
 }
