@@ -1,11 +1,11 @@
 
 resource "azurerm_resource_group" "example" {
-  name     = "PE-Test"
-  location = "UK South"
+  name     = "example-resources"
+  location = "West Europe"
 }
 
 resource "azurerm_virtual_network" "example" {
-  name                = "PE-test-vnet"
+  name                = "example-vnet"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
@@ -29,11 +29,11 @@ resource "azurerm_subnet" "endpoint" {
   resource_group_name  = azurerm_resource_group.example.name
   virtual_network_name = azurerm_virtual_network.example.name
   address_prefixes     = ["10.0.2.0/24"]
-  #private_endpoint_network_policies_enabled = true
+  private_endpoint_network_policies_enabled = true
 }
 
 resource "azurerm_app_service_plan" "example" {
-  name                = "PE-Test-appserviceplan"
+  name                = "example-appserviceplan"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
   kind                = "Linux"
@@ -45,7 +45,7 @@ resource "azurerm_app_service_plan" "example" {
 }
 
 resource "azurerm_app_service" "example" {
-  name                = "PE-Test-appservice"
+  name                = "example-appservice"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
   app_service_plan_id = azurerm_app_service_plan.example.id
@@ -55,7 +55,7 @@ resource "azurerm_app_service" "example" {
 }
 
 resource "azurerm_private_endpoint" "example" {
-  name                = "PE-Test-private-endpoint"
+  name                = "example-private-endpoint"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
   subnet_id           = azurerm_subnet.endpoint.id
@@ -72,12 +72,17 @@ resource "azurerm_private_dns_zone" "example" {
   resource_group_name = azurerm_resource_group.example.name
 }
 
+data "azurerm_private_endpoint" "example" {
+  name                = azurerm_private_endpoint.example.name
+  resource_group_name = azurerm_resource_group.example.name
+}
+
 resource "azurerm_private_dns_a_record" "example" {
   name                = azurerm_app_service.example.name
   zone_name           = azurerm_private_dns_zone.example.name
   resource_group_name = azurerm_resource_group.example.name
   ttl                 = 300
-  records             = [azurerm_private_endpoint_connection.example.private_ip_address]
+  records             = [data.azurerm_private_endpoint.example.private_service_connection[0].private_ip_address]
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "example" {
@@ -85,9 +90,4 @@ resource "azurerm_private_dns_zone_virtual_network_link" "example" {
   resource_group_name   = azurerm_resource_group.example.name
   private_dns_zone_name = azurerm_private_dns_zone.example.name
   virtual_network_id    = azurerm_virtual_network.example.id
-}
-
-resource "azurerm_private_endpoint_connection" "example" {
-  private_endpoint_id = azurerm_private_endpoint.example.id
-  name                = "example-connection"
 }
