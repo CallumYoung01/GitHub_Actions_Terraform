@@ -31,7 +31,7 @@ jobs:
       - name: Run Trivy vulnerability scanner in IaC mode
         uses: aquasecurity/trivy-action@0.20.0
         with:
-          scan-type: 'fs'
+          scan-type: 'config'
           path: '.'
           #hide-progress: true
           #format: 'sarif'
