@@ -37,7 +37,7 @@ jobs:
         with:
           scan-type: 'config'
           path: '.'
-        working-directory: '.'
+          working-directory: '.'
           #hide-progress: true
           #format: 'sarif'
           #output: 'trivy-results.sarif'
