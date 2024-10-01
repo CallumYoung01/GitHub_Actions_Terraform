@@ -30,12 +30,14 @@ jobs:
 
       - name: check dir
         run: echo dir
+        working-directory: './your-directory'
 
       - name: Run Trivy vulnerability scanner in IaC mode
         uses: aquasecurity/trivy-action@0.20.0
         with:
           scan-type: 'config'
           path: '.'
+        working-directory: '.'
           #hide-progress: true
           #format: 'sarif'
           #output: 'trivy-results.sarif'
