@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: check dir
-        run: echo dir
+        run: echo ls
         #working-directory: './your-directory'
 
       - name: Run Trivy vulnerability scanner in IaC mode
