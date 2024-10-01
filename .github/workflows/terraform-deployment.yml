@@ -36,8 +36,8 @@ jobs:
         uses: aquasecurity/trivy-action@0.20.0
         with:
           scan-type: 'config'
-          path: '.'
-          working-directory: '.'
+          #path: '.'
+          #working-directory: '.'
           #hide-progress: true
           #format: 'sarif'
           #output: 'trivy-results.sarif'
