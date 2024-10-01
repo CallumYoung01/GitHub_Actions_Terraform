@@ -36,6 +36,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.20.0
         with:
           scan-type: 'config'
+          working-directory: './Terraform'
           #path: '.'
           #working-directory: '.'
           #hide-progress: true
