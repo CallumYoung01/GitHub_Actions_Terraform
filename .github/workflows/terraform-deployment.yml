@@ -33,10 +33,11 @@ jobs:
         #working-directory: './your-directory'
 
       - name: Run Trivy vulnerability scanner in IaC mode
-        uses: aquasecurity/trivy-action@0.20.0
+        uses: aquasecurity/trivy-action@0.24.0
         with:
-          scan-type: 'fs'
-          working-directory: './Terraform'
+          scan-type: 'config'
+          scan-path: '.'
+          #working-directory: './Terraform'
           #path: '.'
           #working-directory: '.'
           #hide-progress: true
