@@ -12,7 +12,8 @@ resource "azurerm_app_service_environment" "managed_environment" {
   resource_group_name = azurerm_resource_group.main_rg.name
   location            = var.location
 
-  zone_redundant = false
+  zone_redundant = false 
+  subnet_id = data.azurerm_subnet.this.id
 
   infrastructure_resource_group = "ME_managedEnvironment-tf"
   infrastructure_subnet_id   = data.azurerm_subnet.this.id
