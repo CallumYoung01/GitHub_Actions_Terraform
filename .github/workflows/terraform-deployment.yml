@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     name: "Dev Terraform Deploy"
     needs: trivy_scan
-    #environment: development 
+    environment: development 
     env: 
       ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
       name: Dev Deploy
