@@ -15,11 +15,13 @@ resource "azurerm_app_service_environment" "managed_environment" {
   zone_redundant = false
 
   infrastructure_resource_group = "ME_managedEnvironment-tf"
+  infrastructure_subnet_id   = data.azurerm_subnet.this.id
 
-  vnet_configuration {
-    internal                   = true
-    infrastructure_subnet_id   = data.azurerm_subnet.this.id
-  }
+
+  #vnet_configuration {
+  #  internal                   = true
+  #  infrastructure_subnet_id   = data.azurerm_subnet.this.id
+  #}
 
   #peer_authentication {
   #  mtls {
