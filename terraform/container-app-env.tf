@@ -8,15 +8,15 @@
 #}
 
 resource "azurerm_app_service_environment" "managed_environment" {
-  name                = "tf-created-cae"
-  resource_group_name = azurerm_resource_group.main_rg.name
-  location            = var.location
+    name                = "tf-created-cae"
+    resource_group_name = azurerm_resource_group.main_rg.name
+    location            = var.location
 
-  zone_redundant = false 
-  subnet_id = data.azurerm_subnet.this.id
+  #zone_redundant = false 
+    subnet_id = data.azurerm_subnet.this.id
 
-  infrastructure_resource_group = "ME_managedEnvironment-tf"
-  infrastructure_subnet_id   = data.azurerm_subnet.this.id
+  #infrastructure_resource_group = "ME_managedEnvironment-tf"
+  #infrastructure_subnet_id   = data.azurerm_subnet.this.id
 
 
   #vnet_configuration {
@@ -36,10 +36,10 @@ resource "azurerm_app_service_environment" "managed_environment" {
   #  }
   #}
 
-  workload_profile {
-    workload_profile_type = "Consumption"
-    name                  = "Consumption"
-  }
+    workload_profile {
+        workload_profile_type = "Consumption"
+        name                  = "Consumption"
+    }
 }
 
 data "azurerm_virtual_network" "this" {
