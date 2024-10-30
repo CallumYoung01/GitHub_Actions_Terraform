@@ -18,7 +18,7 @@ resource "azurerm_app_service_environment" "managed_environment" {
 
   vnet_configuration {
     internal                   = true
-    infrastructure_subnet_id   = azurerm_subnet.manual_subnet_1.id
+    infrastructure_subnet_id   = data.azurerm_subnet.this.id
   }
 
   peer_authentication {
@@ -37,4 +37,15 @@ resource "azurerm_app_service_environment" "managed_environment" {
     workload_profile_type = "Consumption"
     name                  = "Consumption"
   }
+}
+
+data "azurerm_virtual_network" "this" {
+    name = "manutal-vnet-1"
+    resource_group_name = "Manual-cae-test"
+}
+
+data "azurerm_subnet" "this" {
+    name = "manual-subnet-1"
+    resource_group_name = "Manual-cae-test"
+    virtual_network_name = "manutal-vnet-1"
 }
