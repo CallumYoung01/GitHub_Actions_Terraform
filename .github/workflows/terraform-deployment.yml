@@ -20,38 +20,7 @@ env:
 
 
 jobs:
-
-  trivy_scan: 
-    runs-on: ubuntu-latest
-    name: "Trivy IaC Security Scan"
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: check dir
-        run: ls
-        #working-directory: './your-directory'
-
-      #- name: Run Trivy vulnerability scanner in IaC mode
-      #  uses: aquasecurity/trivy-action@0.24.0
-      #  with:
-      #    scan-type: 'config'
-      #    scan-path: '.'
-          #working-directory: './Terraform'
-          #path: '.'
-          #working-directory: '.'
-          #hide-progress: true
-          #format: 'sarif'
-          #output: 'trivy-results.sarif'
-          #exit-code: '1'
-          #ignore-unfixed: true
-          #severity: 'CRITICAL,HIGH'
-
-      #- name: Upload Trivy scan results to GitHub Security tab
-      #  uses: github/codeql-action/upload-sarif@v2
-      #  with:
-      #    sarif_file: 'trivy-results.sarif'
-
+  runs-on: ubuntu-latest
 
   dev_deploy:
     runs-on: ubuntu-latest
@@ -81,6 +50,7 @@ jobs:
           subscription_id: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
 
 
+          
   QA_deploy:
     name: "QA Terraform Deploy"
     runs-on: ubuntu-latest
