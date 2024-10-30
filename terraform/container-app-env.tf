@@ -21,17 +21,17 @@ resource "azurerm_app_service_environment" "managed_environment" {
     infrastructure_subnet_id   = data.azurerm_subnet.this.id
   }
 
-  peer_authentication {
-    mtls {
-      enabled = false
-    }
-  }
+  #peer_authentication {
+  #  mtls {
+  #    enabled = false
+  #  }
+  #}
 
-  peer_traffic_configuration {
-    encryption {
-      enabled = false
-    }
-  }
+  #peer_traffic_configuration {
+  #  encryption {
+  #    enabled = false
+  #  }
+  #}
 
   workload_profile {
     workload_profile_type = "Consumption"
