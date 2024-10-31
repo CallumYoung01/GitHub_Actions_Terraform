@@ -1,2 +1,2 @@
-location           = "UK South"
+location           = "UK West"
 product_alias      = "example-alias"
