@@ -19,32 +19,32 @@ provider "azurerm" {
 
 
 
-terraform {
-
-  backend "azurerm" {
-    key                  = "github.terraform.tfstate"
-  }
-
-  required_version = ">=0.12"
-
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~>4.7.6"
-    }
-  }
-}
-
-##
-# Providers
-##
-
-provider "azurerm" {
-  features {}
-}
-
-
-
+#terraform {
+#
+#  backend "azurerm" {
+#    key                  = "github.terraform.tfstate"
+#  }
+#
+#  required_version = ">=0.12"
+#
+#  required_providers {
+#    azurerm = {
+#      source  = "hashicorp/azurerm"
+#      version = "~>4.7.6"
+#    }
+#  }
+#}
+#
+###
+## Providers
+###
+#
+#provider "azurerm" {
+#  features {}
+#}
+#
+#
+#
 #terraform {
 #  required_providers {
 #    azurerm = {
