@@ -1,6 +1,6 @@
 # Create a Container App Environment
 resource "azurerm_container_app_environment" "example" {
-  name                = "cae-tf-test"
+  name                = "cae-tf-test2"
   resource_group_name = "terraform-cae"
   location            = var.location
   infrastructure_subnet_id = data.azurerm_subnet.this.id
