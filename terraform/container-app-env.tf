@@ -6,6 +6,11 @@ resource "azurerm_container_app_environment" "example" {
   infrastructure_subnet_id = data.azurerm_subnet.this.id
   internal_load_balancer_enabled = true
   # No internal or vnet_configuration here
+
+  workload_profile {
+    name = "Consumption"
+    workload_profile_type = "Consumption"
+  }
 }
 
 
