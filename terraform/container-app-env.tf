@@ -7,7 +7,7 @@
 #  #log_analytics_workspace_id = azurerm_log_analytics_workspace.example.id
 #}
 
-resource "azurerm_container_app_environment" "example" {
+resource "azurerm_container_app_environment" "test" {
   name                = "test-tf-cae"
   resource_group_name = "Manual-cae-test"
   location            = var.location
@@ -17,7 +17,7 @@ resource "azurerm_container_app_environment" "example" {
   vnet_configuration {
     subnet_id = azurerm_subnet.example.id
   }
-  
+
 }
 
 data "azurerm_virtual_network" "this" {
