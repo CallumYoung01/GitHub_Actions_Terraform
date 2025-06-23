@@ -54,7 +54,7 @@ jobs:
 
 
   dev_deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # The default hosted runner will need changing when the the storage account hosting the tfstate has public accessing disabled and private endpoint enabled. 
     name: "Dev Terraform Deploy"
     needs: trivy_scan
     #environment: development 
