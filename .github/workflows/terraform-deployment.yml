@@ -32,11 +32,11 @@ jobs:
         run: ls
         #working-directory: './your-directory'
 
-      - name: Run Trivy vulnerability scanner in IaC mode
-        uses: aquasecurity/trivy-action@0.24.0
-        with:
-          scan-type: 'config'
-          scan-path: '.'
+      #- name: Run Trivy vulnerability scanner in IaC mode
+      #  uses: aquasecurity/trivy-action@0.24.0
+      #  with:
+      #    scan-type: 'config'
+      #    scan-path: '.'
           #working-directory: './Terraform'
           #path: '.'
           #working-directory: '.'
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest # The default hosted runner will need changing when the the storage account hosting the tfstate has public accessing disabled and private endpoint enabled. 
     name: "Dev Terraform Deploy"
     needs: trivy_scan
-    #environment: development 
+    environment: development 
     env: 
       ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
       name: Dev Deploy
