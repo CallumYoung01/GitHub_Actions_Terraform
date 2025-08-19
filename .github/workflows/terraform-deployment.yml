@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest # The default hosted runner will need changing when the the storage account hosting the tfstate has public accessing disabled and private endpoint enabled. 
     name: "Dev Terraform Deploy"
     needs: trivy_scan
-    environment: development 
+    environment: development # This is the GitHub environment that will be used for this deployment. 
     env: 
       ARM_CLIENT_ID: ${{ secrets.TERRAFORM_CLIENT_ID }}
       name: Dev Deploy
@@ -76,7 +76,7 @@ jobs:
           ARM_ACCESS_KEY: ${{ secrets.TERRAFORM_ACCESS_KEY }}
           WORKING_DIRECTORY: ./terraform
         with:
-          environment: dev
+          environment: dev 
           serviceprinciple_key: ${{ secrets.TERRAFORM_CLIENT_SECRET }}
           subscription_id: ${{ secrets.TERRAFORM_SUBSCRIPTION_ID }}
 
