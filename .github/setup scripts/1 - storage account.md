@@ -1,7 +1,7 @@
 # This code assumes you already have a Resource Group created in Azure. If you are starting from scratch, you can create a Resource Group using the Azure CLI or Azure Portal.
 # Run the below script to create a storage account in Azure using the Azure CLI. Running this in the Azure Cloud Shell is recommended. (Contributor will be required on the subscription).
 # Ensure you update the variables as needed.
-# On Completion, the script will output the name of the created storage account.This should be added in your Terraform backend configuration.
+# On completion, the script will output the name of the created storage account.This should be added in your Terraform backend configuration.
 
 
 # Variables

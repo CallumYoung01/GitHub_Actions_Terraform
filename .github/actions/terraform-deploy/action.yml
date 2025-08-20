@@ -32,20 +32,6 @@ runs:
         TF_VAR_subscription_id: ${{ inputs.subscription_id }}
       working-directory: ./terraform
 
-    #- name: Terraform Format
-    #  id: Format
-    #  if: github.ref == 'refs/heads/main'
-    #  shell: bash
-    #  run: |
-    #    terraform init -backend-config="./backend/${{ inputs.environment }}-backend.hcl"
-    #    terraform fmt -check
-    #  env:
-    #    TF_VAR_serviceprinciple_key: ${{ inputs.serviceprinciple_key }}
-    #    TF_VAR_environment: ${{ inputs.environment }}
-    #    TF_VAR_subscription_id: ${{ inputs.subscription_id }}
-    #  working-directory: ./terraform
-
-
     - name: Terraform Plan
       id: plan
       shell: bash
